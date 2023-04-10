@@ -6,8 +6,11 @@ import com.example.notesapi.dto.NoteDto;
 import com.example.notesapi.service.NoteService;
 //import jakarta.validation.Valid;
 //import jakarta.validation.Valid;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+//import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiResponse;
+//import io.swagger.annotations.ApiResponses;
+//import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -37,12 +40,12 @@ public class NoteController {
 
     //глянути який http статус вертає при успішному видаленні, якщ що то нехай метод вертає
     // HttpStatus.OK і чи потрібно з responceBody вкртати HttpStatus
-        @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "deleted"),
-//                    String  HttpStatus.CREATED.toString()),
-            @ApiResponse(code = 400, message = "BAD_REQUEST")
-//            HttpStatus.BAD_REQUEST
-    })
+//        @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "deleted"),
+////                    String  HttpStatus.CREATED.toString()),
+//            @ApiResponse(code = 400, message = "BAD_REQUEST")
+////            HttpStatus.BAD_REQUEST
+//    })
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         noteService.delete(id);
@@ -56,6 +59,8 @@ public class NoteController {
 
 //    /?order=course_asc
 
+//    @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
+@SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/{id}/like")
     public void likeNote(
 //            @ApiIgnore @AuthenticationPrincipal UserPrincipal

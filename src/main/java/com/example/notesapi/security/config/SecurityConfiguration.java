@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -49,7 +51,17 @@ public class SecurityConfiguration {
 
     private static final String[] AUTH_WHITELIST = {
             "/login",
-            "/notes"
+            "/notes",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/v3/api-docs/**",
+            "/resources/**",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+           "/swagger-ui/index.html#/",
+            "/swagger-ui.html",
+            "/webjars/**"
     };
 
 
@@ -63,15 +75,12 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and()
-                .authorizeHttpRequests(
-                        requests -> requests
-                                .requestMatchers(AUTH_WHITELIST).permitAll()
-                )
-                .authorizeHttpRequests(requests -> requests
-                        .anyRequest().authenticated()
-                );
-        http
-                .addFilterBefore(new JwtAuthorizationFilter(tokenManagementService), UsernamePasswordAuthenticationFilter.class);
+//                .authorizeHttpRequests().anyRequest().permitAll()
+                .authorizeHttpRequests().requestMatchers(AUTH_WHITELIST).permitAll();
+//                .and()
+//                .authorizeHttpRequests().anyRequest().authenticated();
+//        http
+//                .addFilterBefore(new JwtAuthorizationFilter(tokenManagementService), UsernamePasswordAuthenticationFilter.class);
 //
 //        http.authorizeRequests().antMatchers("/login").permitAll()
 //
@@ -92,16 +101,26 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/v2/api-docs",
-                "/resources/**",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**"
-        );
-    }
+//    ignore Mvc [pattern='/v2/api-docs'].
+//    This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web
+////                .ignoring()
+//                .authorizeHttpRequests(
+//                requests -> requests
+//                        .requestMatchers(AUTH_WHITELIST).permitAll()
+//        )
+//
+//                .requestMatchers("/v2/api-docs",
+//                "/resources/**",
+//                "/configuration/ui",
+//                "/swagger-resources/**",
+//                "/configuration/security",
+//                "/swagger-ui.html",
+//                "/webjars/**"
+//        );
+//    }
 
 }
