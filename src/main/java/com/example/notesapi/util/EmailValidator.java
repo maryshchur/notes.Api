@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-//import javax.validation.ConstraintValidator;
-//import javax.validation.ConstraintValidatorContext;
 
 @RequiredArgsConstructor
 public class EmailValidator implements ConstraintValidator<EmailExist, String> {
@@ -17,6 +15,6 @@ public class EmailValidator implements ConstraintValidator<EmailExist, String> {
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-        return !userRepository.findByEmail(email.trim().toLowerCase()).isPresent();
+        return userRepository.findByEmail(email.trim().toLowerCase()).isEmpty();
     }
 }

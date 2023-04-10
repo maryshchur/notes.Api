@@ -3,10 +3,10 @@ package com.example.notesapi.security;
 import com.example.notesapi.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 @Data
 public class UserPrincipal implements UserDetails {

@@ -5,7 +5,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -23,11 +22,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final TokenManagementService tokenManagementService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
-
-//    @Autowired
-//    public JwtAuthorizationFilter(TokenManagementService tokenManagementService) {
-//        this.tokenManagementService = tokenManagementService;
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {

@@ -2,30 +2,24 @@ package com.example.notesapi.security;
 
 import com.example.notesapi.dto.UserLoginDto;
 import com.example.notesapi.entity.User;
-import com.example.notesapi.exception.CustomException;
 import com.example.notesapi.repository.UserRepository;
 import com.example.notesapi.security.config.SecurityConfiguration;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class AuthenticationService {
 
-    private TokenManagementService tokenManagementService;
-    private UserRepository userRepository;
-    private SecurityConfiguration webSecurityConfig;
-
-    @Autowired
-    public AuthenticationService(TokenManagementService tokenManagementService,
-                                 UserRepository userRepository,
-                                 SecurityConfiguration webSecurityConfig) {
-        this.tokenManagementService = tokenManagementService;
-        this.userRepository = userRepository;
-        this.webSecurityConfig = webSecurityConfig;
-    }
+    private final TokenManagementService tokenManagementService;
+    private final UserRepository userRepository;
+    private final SecurityConfiguration webSecurityConfig;
 
     public String loginUser(UserLoginDto loginUser) {
 
@@ -34,8 +28,8 @@ public class AuthenticationService {
         if (user.isPresent() && passwordEncoder.matches(loginUser.getPassword(), user.get().getPassword())) {
             return tokenManagementService.generateTokenPair(loginUser.getEmail());
         } else {
-            throw new CustomException("BAD CREDENTIAL");
-//                    BadCredentialException("BAD CREDENTIAL");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "BAD CREDENTIAL");
         }
 
     }

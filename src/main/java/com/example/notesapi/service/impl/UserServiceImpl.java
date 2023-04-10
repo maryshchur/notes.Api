@@ -27,11 +27,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDto user) {
         User entity = modelMapper.map(user, User.class);
-        System.out.println("entity +"+entity);
-        System.out.println(passwordEncoder);
         entity.setPassword(passwordEncoder.encode(user.getPassword()));
         if (userRepository.save(entity) == null) {
-            LOGGER.info("error creating user with email - " +  user.getEmail());
+            LOGGER.info("error creating user with email - " + user.getEmail());
             throw new CustomException(
                     String.format("User with %s email was not saved due to internal error",
                             user.getEmail()));

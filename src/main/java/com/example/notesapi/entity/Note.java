@@ -24,7 +24,6 @@ public class Note {
     @Id
     private String id;
 
-
     @Indexed
     @CreatedDate
     private Date createdDate;
@@ -34,6 +33,5 @@ public class Note {
 
     @Field("likes")
     @DocumentReference(lazy = true)
-//            (lookup = "{ 'acronym' : ?#{#target} }")
     private Set<User> likes;
 }

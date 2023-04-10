@@ -33,16 +33,12 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public void save(String note) {
-        //TODO logger and catch exception this shit into try catch
         Note n = noteRepository.save(Note.builder().content(note).build());
-        System.out.println(n);
-        System.out.println("save");
     }
 
     @Override
     public void delete(String id) {
         if (noteRepository.existsById(id)) {
-            //TODO logger and catch exception this shit into try catch
             noteRepository.deleteById(id);
         } else {
             LOGGER.info("an error occurred during deleting note as note with id - " + id + " does not exist");

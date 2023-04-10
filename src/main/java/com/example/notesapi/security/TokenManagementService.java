@@ -1,12 +1,15 @@
 package com.example.notesapi.security;
 
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Component
+@RequiredArgsConstructor
 public class TokenManagementService {
     @Value("${jwt.token.secret}")
     private String secretKey;
@@ -22,12 +26,7 @@ public class TokenManagementService {
     @Value("${jwt.token.expire}")
     private String expireTimeAccessToken;
 
-    private UserPrincipalDetailsService userPrincipalDetailsService;
-
-    @Autowired
-    public TokenManagementService(UserPrincipalDetailsService userPrincipalDetailsService) {
-        this.userPrincipalDetailsService = userPrincipalDetailsService;
-    }
+    private final UserPrincipalDetailsService userPrincipalDetailsService;
 
     @PostConstruct
     protected void init() {
@@ -57,9 +56,9 @@ public class TokenManagementService {
 
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-//            throw new JwtAuthenticationException("JWT token is expired or invalid");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "JWT token is expired or invalid");
         }
-        return false;
     }
 
     public String resolveAccessToken(HttpServletRequest request) {
