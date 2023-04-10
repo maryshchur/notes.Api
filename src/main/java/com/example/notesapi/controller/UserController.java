@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-//import javax.validation.Valid;
-
-
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -26,13 +23,6 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationService authenticationService;
 
-
-    //    @ApiResponses(value = {
-//            @ApiResponse(code = 201, message = "aaaaa"),
-////                    String  HttpStatus.CREATED.toString()),
-//            @ApiResponse(code = 400, message = "BAD_REQUEST")
-////            HttpStatus.BAD_REQUEST
-//    })
     @PostMapping
     public void create(@RequestBody @Valid UserDto user) {
         System.out.println("UserDto" + user);
@@ -40,14 +30,8 @@ public class UserController {
 //        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    //    private String AUTHORIZATION_HEADER="authorization";
-//    private String REFRESH_HEADER="refreshToken";
-//    private String AUTH_HEADER_PREFIX="Bearer ";
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid UserLoginDto user) {
-//        HttpServletResponse response
-//        response.setHeader(AUTHORIZATION_HEADER, AUTH_HEADER_PREFIX+ jwtDto.getAccessToken());
-//        response.setHeader(REFRESH_HEADER, jwtDto.getRefreshToken());
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.loginUser(user));
     }
 }

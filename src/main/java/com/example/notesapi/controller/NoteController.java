@@ -6,7 +6,6 @@ import com.example.notesapi.security.UserPrincipal;
 import com.example.notesapi.service.NoteService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class NoteController {
     @PostMapping
     public void create(
 //            @RequestBody
-                           @Valid @NotBlank @Size(min = 15) @RequestParam String field) {
+            @Valid @NotBlank @Size(min = 15) @RequestParam String field) {
         noteService.save(field);
 //        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -53,19 +52,11 @@ public class NoteController {
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotes(sortDirection));
     }
 
-//    /?order=course_asc
-
     @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
-//    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/{id}/like")
-    public void likeNote(
-            @ApiIgnore @AuthenticationPrincipal UserPrincipal
-                    principal,
-            @PathVariable String id) {
-        noteService.like(
-                principal.getUsername(),
-//                .getUsername(),
-                id);
+    public void likeNote(@ApiIgnore @AuthenticationPrincipal UserPrincipal principal,
+                         @PathVariable String id) {
+        noteService.like(principal.getUsername(), id);
 //        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

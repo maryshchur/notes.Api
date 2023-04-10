@@ -5,9 +5,6 @@ import com.example.notesapi.entity.Note;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 @Configuration
 public class AppConfig {
@@ -24,16 +21,5 @@ public class AppConfig {
         return modelMapper;
     }
 
-//    @Bean
-//    public MongoTemplate mongoTemplate() throws Exception {
-//        MongoTemplate template = new MongoTemplate(mongoClient(), database);
-//        MappingMongoConverter mmc = (MappingMongoConverter)template.getConverter();
-//        mmc.setCustomConversions( new MongoCustomConversions(asList(
-//                new MongoConverters.BinaryToUuidConverter(),
-//                new MongoConverters.UuidToBinaryConverter()
-//        )));
-//        mmc.afterPropertiesSet();
-//        return template;
-//    }
 
 }
