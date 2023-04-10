@@ -1,16 +1,42 @@
 //package com.example.notesapi.config;
 //
 //
+//import com.mongodb.MongoCredential;
+//import com.mongodb.ServerAddress;
+//import com.mongodb.client.MongoClient;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.context.properties.ConfigurationProperties;
+//import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
+//import org.springframework.core.env.Environment;
+//import org.springframework.data.mongodb.MongoDbFactory;
+//import org.springframework.data.mongodb.core.MongoTemplate;
 //
 //import java.net.UnknownHostException;
 //import java.util.Collections;
 //
 //@Configuration
-////@ConfigurationProperties(prefix = "spring.data.mongodb")
+//@ConfigurationProperties(prefix = "spring.data.mongodb")
 ////@EnableMongoRepositories(basePackages = "org.spring.mongo.demo")
-//public class MongoConfig extends AbstractMongoConfiguration {
+//public class MongoConfig
+////        extends AbstractMongoConfiguration {
+//{
 //
+//    @Autowired
+//    private Environment env;
+//
+//    @Bean
+//    public MongoDbFactory mongoDbFactory() {
+//        return new SimpleMongoDbFactory(new MongoClientURI(env.getProperty("spring.data.mongodb.uri")));
+//    }
+//
+//    @Bean
+//    public MongoTemplate mongoTemplate() {
+//        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
+//
+//        return mongoTemplate;
+//
+//    }
 //
 //    //    @Value("${project.mongodb.hostname}")
 //    private String host;

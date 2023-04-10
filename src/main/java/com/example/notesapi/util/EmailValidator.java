@@ -1,9 +1,10 @@
 package com.example.notesapi.util;
 
 import com.example.notesapi.repository.UserRepository;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 //import javax.validation.ConstraintValidator;
 //import javax.validation.ConstraintValidatorContext;

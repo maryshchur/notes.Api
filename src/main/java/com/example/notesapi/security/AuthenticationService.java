@@ -2,6 +2,7 @@ package com.example.notesapi.security;
 
 import com.example.notesapi.dto.UserLoginDto;
 import com.example.notesapi.entity.User;
+import com.example.notesapi.exception.CustomException;
 import com.example.notesapi.repository.UserRepository;
 import com.example.notesapi.security.config.SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AuthenticationService {
         if (user.isPresent() && passwordEncoder.matches(loginUser.getPassword(), user.get().getPassword())) {
             return tokenManagementService.generateTokenPair(loginUser.getEmail());
         } else {
-            throw new RuntimeException("BAD CREDENTIAL");
+            throw new CustomException("BAD CREDENTIAL");
 //                    BadCredentialException("BAD CREDENTIAL");
         }
 

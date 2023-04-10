@@ -2,14 +2,7 @@ package com.example.notesapi.security.filter;
 
 import com.example.notesapi.security.TokenManagementService;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +11,27 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private TokenManagementService tokenManagementService;
+    private final TokenManagementService tokenManagementService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
-    @Autowired
-    public JwtAuthorizationFilter(TokenManagementService tokenManagementService) {
-        this.tokenManagementService = tokenManagementService;
-    }
+//    @Autowired
+//    public JwtAuthorizationFilter(TokenManagementService tokenManagementService) {
+//        this.tokenManagementService = tokenManagementService;
+//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        String accessToken = tokenManagementService.resolveAccessToken( httpServletRequest);
+        String accessToken = tokenManagementService.resolveAccessToken(httpServletRequest);
 
         if (accessToken != null) {
             try {

@@ -2,27 +2,21 @@ package com.example.notesapi.controller;
 
 
 import com.example.notesapi.dto.NoteDto;
-//import com.example.notesapi.security.UserPrincipal;
+import com.example.notesapi.security.UserPrincipal;
 import com.example.notesapi.service.NoteService;
-//import jakarta.validation.Valid;
-//import jakarta.validation.Valid;
-//import io.swagger.annotations.ApiOperation;
-//import io.swagger.annotations.ApiResponse;
-//import io.swagger.annotations.ApiResponses;
-//import io.swagger.annotations.Authorization;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-//import springfox.documentation.annotations.ApiIgnore;
+import springfox.documentation.annotations.ApiIgnore;
 
-//import javax.validation.Valid;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @RestController
@@ -33,7 +27,9 @@ public class NoteController {
     private final NoteService noteService;
 
     @PostMapping
-    public void create(@RequestBody @Valid @NotBlank @Size(min = 15) @RequestParam String field ){
+    public void create(
+//            @RequestBody
+                           @Valid @NotBlank @Size(min = 15) @RequestParam String field) {
         noteService.save(field);
 //        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -59,15 +55,15 @@ public class NoteController {
 
 //    /?order=course_asc
 
-//    @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
-@SecurityRequirement(name = "Bearer Authentication")
+    @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
+//    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/{id}/like")
     public void likeNote(
-//            @ApiIgnore @AuthenticationPrincipal UserPrincipal
-            String principal,
-                         @PathVariable String id) {
+            @ApiIgnore @AuthenticationPrincipal UserPrincipal
+                    principal,
+            @PathVariable String id) {
         noteService.like(
-                principal ,
+                principal.getUsername(),
 //                .getUsername(),
                 id);
 //        return ResponseEntity.status(HttpStatus.CREATED).build();
