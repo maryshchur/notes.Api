@@ -52,6 +52,9 @@ public class SecurityConfiguration {
     private static final String[] AUTH_WHITELIST = {
             "/login",
             "/notes",
+            "/users",
+            "/users/**",
+//            "/users",
             "/swagger-ui/**",
             "/v2/api-docs",
             "/v3/api-docs/**",
@@ -68,13 +71,14 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        System.out.println("FILTERRRRRRR");
 
         http.cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .and()
+//                .csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+//                .and()
 //                .authorizeHttpRequests().anyRequest().permitAll()
                 .authorizeHttpRequests().requestMatchers(AUTH_WHITELIST).permitAll();
 //                .and()

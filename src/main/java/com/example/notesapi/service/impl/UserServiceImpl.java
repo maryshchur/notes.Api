@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     private final ModelMapper modelMapper;
 
@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     public void save(UserDto user) {
         User entity = modelMapper.map(user, User.class);
         System.out.println("entity +"+entity);
-        System.out.println(passwordEncoder);
-        entity.setPassword(passwordEncoder.encode(user.getPassword()));
+//        System.out.println(passwordEncoder);
+//        entity.setPassword(passwordEncoder.encode(user.getPassword()));
         if (userRepository.save(entity) == null) {
             LOGGER.info("error creating user with email - " +  user.getEmail());
             throw new CustomException(

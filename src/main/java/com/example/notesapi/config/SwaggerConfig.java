@@ -2,47 +2,37 @@ package com.example.notesapi.config;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import org.modelmapper.internal.util.Lists;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.web.bind.annotation.RestController;
-//import springfox.documentation.builders.RequestHandlerSelectors;
-//import springfox.documentation.service.ApiInfo;
-//import springfox.documentation.service.ApiKey;
-//import springfox.documentation.spi.DocumentationType;
-//import springfox.documentation.spring.web.plugins.Docket;
-//import springfox.documentation.builders.RequestHandlerSelectors;
-//import springfox.documentation.service.ApiInfo;
-//import springfox.documentation.service.ApiKey;
-//import springfox.documentation.service.AuthorizationScope;
-//import springfox.documentation.service.SecurityReference;
-//import springfox.documentation.spi.DocumentationType;
-//import springfox.documentation.spring.web.plugins.Docket;
-//import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.servers.Server;
-import java.awt.print.Pageable;
-import java.util.Arrays;
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import java.util.List;
 
 @Configuration
 //@EnableSwagger3
-@SecurityScheme(
-        name = "Bearer Authentication",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        scheme = "bearer"
-)
+//@SecurityScheme(
+//        name = "Bearer Authentication",
+//        type = SecuritySchemeType.HTTP,
+//        bearerFormat = "JWT",
+//        scheme = "bearer"
+//)
 public class SwaggerConfig {
     private static final String AUTHORIZATION_HEADER = "Authorization";
+
+
+    @Bean
+    public OpenAPI usersMicroserviceOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Your API Title")
+                        .description("Your API Description")
+                        .version("1.0"));
+    }
 //    private ApiKey apiKey() {
 //        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
 //    }
@@ -63,34 +53,70 @@ public class SwaggerConfig {
 //        @Value("${bezkoder.openapi.prod-url}")
 //        private String prodUrl;
 
-        @Bean
-        public OpenAPI myOpenAPI() {
-            Server devServer = new Server();
-            devServer.setUrl("http://localhost:8090");
-            devServer.setDescription("Server URL in Development environment");
 
-//            Server prodServer = new Server();
-//            prodServer.setUrl(prodUrl);
-//            prodServer.setDescription("Server URL in Production environment");
-
-            Contact contact = new Contact();
-            contact.setEmail("bezkoder@gmail.com");
-            contact.setName("BezKoder");
-            contact.setUrl("https://www.bezkoder.com");
-
-            License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
-
-            Info info = new Info()
-                    .title("Tutorial Management API")
-                    .version("1.0")
-                    .contact(contact)
-                    .description("This API exposes endpoints to manage tutorials.").termsOfService("https://www.bezkoder.com/terms")
-                    .license(mitLicense);
-
-            return new OpenAPI().info(info).servers( List.of(devServer));
-//                    List.of(devServer, prodServer));
-        }
+//    @Bean
+//    public OpenAPI customizeOpenAPI() {
+//        final String securitySchemeName = "bearerAuth";
+//        return new OpenAPI()
+//                .addSecurityItem(new SecurityRequirement()
+//                        .addList(securitySchemeName))
+//                .components(new Components()
+//                        .addSecuritySchemes(securitySchemeName, new SecurityScheme()
+//                                .name(securitySchemeName)
+//                                .type(SecurityScheme.Type.HTTP)
+//                                .scheme("bearer")
+//                                .bearerFormat("JWT")));
 //    }
+
+//    @Bean
+//
+//    public OpenAPI customOpenAPI(@Value("${application-description}") String appDesciption, @Value("${application-version}") String appVersion) {
+//
+//        return new OpenAPI()
+//
+//                .info(new Info()
+//
+//                                .title("sample application API")
+//
+//                                .version(appVersion)
+//
+//                                .description(appDesciption)
+//
+//                                .termsOfService("http://swagger.io/terms/")
+//                                .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+//
+//    }
+
+//}
+
+//    @Bean
+//    public OpenAPI myOpenAPI() {
+//        Server devServer = new Server();
+//        devServer.setUrl("http://localhost:8090");
+//        devServer.setDescription("Server URL in Development environment");
+//
+////            Server prodServer = new Server();
+////            prodServer.setUrl(prodUrl);
+////            prodServer.setDescription("Server URL in Production environment");
+//
+////            Contact contact = new Contact();
+////            contact.setEmail("bezkoder@gmail.com");
+////            contact.setName("BezKoder");
+////            contact.setUrl("https://www.bezkoder.com");
+////
+////            License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
+//
+//        Info info = new Info()
+//                .title("Tutorial Management API")
+//                .version("1.0");
+////                    .contact(contact)
+////                    .description("This API exposes endpoints to manage tutorials.").termsOfService("https://www.bezkoder.com/terms")
+////                    .license(mitLicense);
+//
+//        return new OpenAPI().info(info).servers(List.of(devServer));
+////                    List.of(devServer, prodServer));
+//    }
+////    }
 
 
 //    private ApiKey apiKey() {
